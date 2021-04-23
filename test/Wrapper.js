@@ -93,6 +93,10 @@ describe('Wrapper', function () {
     await bob.mint(50)
     await bob.transfer(this.wrapper.address, 50)
 
+    const bobB = this.tokenB.connect(this.bob)
+    await bobB.mint(50)
+    await bobB.transfer(this.wrapper.address, 50)
+
     await this.swapper.swap(this.tokenA.address, 20)
     
     expect(
@@ -111,11 +115,11 @@ describe('Wrapper', function () {
       await this.tokenC.balanceOf(this.wrapper.address)
     ).to.equal(30)
 
-    await this.swapper.unswap(this.tokenA.address, 5)
+    await this.swapper.unswap(this.tokenB.address, 5)
 
     expect(
-      await this.tokenA.balanceOf(this.alice.address)
-    ).to.equal(35)
+      await this.tokenB.balanceOf(this.alice.address)
+    ).to.equal(5)
 
     expect(
       await this.tokenC.balanceOf(this.alice.address)
